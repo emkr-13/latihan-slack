@@ -7,6 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Support\Str;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\ContextBlock;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
+use Illuminate\Notifications\Slack\BlockKit\Composites\ConfirmObject;
+
 
 class exampleNotfikasiSlack extends Notification
 {
@@ -44,7 +49,23 @@ class exampleNotfikasiSlack extends Notification
 
     public function toSlack( $notifiable)
     {
-        return (new SlackMessage)->content('seru sekali');   ;
+        // This Simple Slack message
+        // return (new SlackMessage)->content('seru sekali');
+          ;
+        // Use lebih banyak
+        return (new SlackMessage)
+        ->content('One of your invoices has been paid! - Invoice Paid')
+        ->attachment(function ($attachment) {
+            $attachment->title('Invoice Paid')
+                ->fields([
+                    'Invoice No' => '1000',
+                    'Invoice Recipient' => 'taylor@laravel.com',
+                    'Customer' => '#1234',
+                ])
+                ->content('An invoice has been paid. Congratulations!');
+        });
+
+
     }
     /**
      * Get the array representation of the notification.
