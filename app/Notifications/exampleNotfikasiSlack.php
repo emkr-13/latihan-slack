@@ -44,7 +44,7 @@ class exampleNotfikasiSlack extends Notification
 
     public function toSlack( $notifiable)
     {
-        return (new SlackMessage)->content('halo bot ini adalah notifikasi dari Laravel');   ;
+        return (new SlackMessage)->content('seru sekali');   ;
     }
     /**
      * Get the array representation of the notification.
