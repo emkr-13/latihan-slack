@@ -50,20 +50,20 @@ class exampleNotfikasiSlack extends Notification
     public function toSlack( $notifiable)
     {
         // This Simple Slack message
-        // return (new SlackMessage)->content('seru sekali');
+        return (new SlackMessage)->content('salam dari laravel');
           ;
         // Use lebih banyak
-        return (new SlackMessage)
-        ->content('One of your invoices has been paid! - Invoice Paid')
-        ->attachment(function ($attachment) {
-            $attachment->title('Invoice Paid')
-                ->fields([
-                    'Invoice No' => '1000',
-                    'Invoice Recipient' => 'taylor@laravel.com',
-                    'Customer' => '#1234',
-                ])
-                ->content('An invoice has been paid. Congratulations!');
-        });
+        // return (new SlackMessage)
+        // ->content('One of your invoices has been paid! - Invoice Paid')
+        // ->attachment(function ($attachment) {
+        //     $attachment->title('Invoice Paid')
+        //         ->fields([
+        //             'Invoice No' => '1000',
+        //             'Invoice Recipient' => 'taylor@laravel.com',
+        //             'Customer' => '#1234',
+        //         ])
+        //         ->content('An invoice has been paid. Congratulations!');
+        // });
 
 
     }
