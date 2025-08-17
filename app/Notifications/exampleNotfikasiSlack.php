@@ -6,11 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\SlackMessage;
-use Illuminate\Support\Str;
 use Illuminate\Notifications\Slack\BlockKit\Blocks\ContextBlock;
 use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
 use Illuminate\Notifications\Slack\BlockKit\Composites\ConfirmObject;
+use Illuminate\Notifications\Slack\SlackMessage;
 
 
 class exampleNotfikasiSlack extends Notification
@@ -46,26 +45,31 @@ class exampleNotfikasiSlack extends Notification
                     ->line('Thank you for using our application!');
     }
 
-
-    public function toSlack( $notifiable)
+    public function toSlack(object $notifiable): SlackMessage
     {
-        // This Simple Slack message
-        return (new SlackMessage)->content('salam dari laravel');
-          ;
-        // Use lebih banyak
-        // return (new SlackMessage)
-        // ->content('One of your invoices has been paid! - Invoice Paid')
-        // ->attachment(function ($attachment) {
-        //     $attachment->title('Invoice Paid')
-        //         ->fields([
-        //             'Invoice No' => '1000',
-        //             'Invoice Recipient' => 'taylor@laravel.com',
-        //             'Customer' => '#1234',
-        //         ])
-        //         ->content('An invoice has been paid. Congratulations!');
-        // });
+    $template = <<<JSON
+            {
+            "blocks": [
+                {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Team Announcement"
+                }
+                },
+                {
+                "type": "section",
+                "text": {
+                    "type": "plain_text",
+                    "text": "We are hiring!"
+                }
+                }
+            ]
+            }
+        JSON;
 
-
+        return (new SlackMessage)
+            ->usingBlockKitTemplate($template);
     }
     /**
      * Get the array representation of the notification.
