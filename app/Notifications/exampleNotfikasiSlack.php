@@ -47,29 +47,24 @@ class exampleNotfikasiSlack extends Notification
 
     public function toSlack(object $notifiable): SlackMessage
     {
-    $template = <<<JSON
-            {
-            "blocks": [
-                {
-                "type": "header",
-                "text": {
-                    "type": "plain_text",
-                    "text": "Team Announcement"
-                }
-                },
-                {
-                "type": "section",
-                "text": {
-                    "type": "plain_text",
-                    "text": "We are hiring!"
-                }
-                }
-            ]
-            }
-        JSON;
-
         return (new SlackMessage)
-            ->usingBlockKitTemplate($template);
+            ->text('New request')
+            ->headerBlock('New request')
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->field("*Type:*\nPaid Time Off")->markdown();
+                $block->field("*Created by:*\n<example.com|Fred Enriquez>")->markdown();
+            })
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->field("*When:*\nAug 10 - Aug 13")->markdown();
+                $block->field("*Type:*\nPaid time off")->markdown();
+            })
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->field("*Hours:*\n16.0 (2 days)")->markdown();
+                $block->field("*Remaining balance:*\n32.0 hours (4 days)")->markdown();
+            })
+            ->sectionBlock(function (SectionBlock $block) {
+                $block->text("<https://google.com|View request>")->markdown();
+            });
     }
     /**
      * Get the array representation of the notification.
